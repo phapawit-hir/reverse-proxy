@@ -1,0 +1,21 @@
+version: '2.0'
+services: 
+    rp:
+        image: ${nginx_image}:${nginx_image_tag}
+        container_name: rp
+        restart: unless-stopped
+        ports: 
+        - "80:80"
+        volumes:
+          - rplog:/log
+          - ./rp/config:/etc/nginx/:ro
+        networks:
+          - rpnetwork
+          - rp_local
+        
+networks:
+   rp_local:
+   rpnetwork:
+      external: true
+volumes:
+  rplog:
